@@ -1,5 +1,5 @@
 from tkinter import *
-
+import Calculator as C
 
 class TextEditor:
     newInput = False
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         #TODO CALCULATOR
         if input is not None:
             # Pass input to the parser (Just printing for now instead)
-            print(input)
+            print(C().getInput(input))
 
             # Pass error or output back to the window from the parser
             #window.output_text(outputstring)
