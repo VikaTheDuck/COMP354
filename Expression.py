@@ -4,6 +4,8 @@ class Expression(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def execute():
         pass
+    def __str__(self) -> str:
+        return f'( {self.x} {self.__class__.__name__} {self.y} )'
 
 class CompositeAddition(Expression):
     def __init__(self):
@@ -20,6 +22,13 @@ class CompositeAddition(Expression):
 
     def removeOperation(self, component):
         self._children.discard(component) 
+        
+    def __str__(self) -> str:
+        print("in comp str")
+        output = ''
+        for child in self._children:
+            output += child.__str__() + " ADD "
+        return output
 
 class CompositeSubtraction(Expression):
     def __init__(self):
@@ -36,6 +45,13 @@ class CompositeSubtraction(Expression):
 
     def removeOperation(self, component):
         self._children.discard(component) 
+        
+    def __str__(self) -> str:
+        print("in comp str")
+        output = ''
+        for child in self._children:
+            output += child.__str__() + " MINUS "
+        return output
 
 class Add(Expression):
     def __init__(self, x, y) -> None:
@@ -70,6 +86,7 @@ class IfStatement(Expression):
         self.y = y
         self.operator = operator
         self.thenOperation = thenOperation
+        self.elseOperation = elseOperation
     
     def execute(self):
         if isinstance(self.x,Expression):
@@ -80,6 +97,9 @@ class IfStatement(Expression):
             return eval(self.thenOperation)
         else:
             return eval(self.elseOperation)
+    
+    def __str__(self) -> str:
+        return f'( if {self.x} {self.operator} {self.y} then {self.thenOperation} else {self.elseOperation} )'
 
 def main():
     expr = CompositeAddition()
@@ -93,8 +113,10 @@ def main():
     # expr.addOperation(i)
     x = Add(3, Add(1, Subtract(5, IfStatement(5,4, '>', '5+4'))))
     y = IfStatement(5,4, '>', '2+3')
+    # y = IfStatement(5,4, '>', Add(1,4), Add(2,5))
+    
+    
     expr.addOperation(x)
     print(y.execute())
-
 if __name__ == "__main__":
     main()
