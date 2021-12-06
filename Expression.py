@@ -1,11 +1,35 @@
 import abc
 
+class _Exception():
+    def __init__(self, message = 'Base Exception'):
+        self.message = message
+    def execute(self):
+        return self.__str__()
+    def __str__(self):
+        return f'Exception : {self.message}'
+
+# TODO: fix __str__() methods to allow gui use (ie. proper 5 + 2 - 5 instead of (5 Add 2) Minus 5)
 class Expression(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def execute():
         pass
     def __str__(self) -> str:
-        return f'( {self.x} {self.__class__.__name__} {self.y} )'
+        print(self.__class__.__name__)
+        return f'( {self.x} {"+" if self.__class__.__name__ in ["Add", "CompositeAddition"] else "-"} {self.y} )'
+
+class Assignment(Expression):
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = value
+    
+    def execute(self):
+        if type(self.value) is float:
+            return self.__str__()
+        else:
+            return f'Assigned {self.key} to {self.value.execute()}'
+
+    def __str__(self) -> str:
+        return f'Assigned {self.key} to {self.value}'
 
 class CompositeAddition(Expression):
     def __init__(self):
