@@ -253,8 +253,6 @@ class Parser:
                 return Exception(f"{param} is not a valid keyword")
             return self.keywords.get(param) or self.user_keywords.get(param)
     
-
-
 def new_parser_tests():
     parser = Parser()
     tests = [
@@ -348,5 +346,5 @@ if __name__ == '__main__':
     # print(output)
     # if type(output) is not Exception:
     #     print(output.execute())
-    
+
     
