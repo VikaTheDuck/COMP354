@@ -9,7 +9,7 @@ class Expression(metaclass=abc.ABCMeta):
 
 class CompositeAddition(Expression):
     def __init__(self):
-        self._children = set()
+        self._children = []
 
     def execute(self):
         result = 0
@@ -18,10 +18,10 @@ class CompositeAddition(Expression):
         return result
 
     def addOperation(self, component):
-        self._children.add(component)
+        self._children.append(component)
 
     def removeOperation(self, component):
-        self._children.discard(component) 
+        self._children.remove(component) 
         
     def __str__(self) -> str:
         print("in comp str")
@@ -32,7 +32,7 @@ class CompositeAddition(Expression):
 
 class CompositeSubtraction(Expression):
     def __init__(self):
-        self._children = set()
+        self._children = []
 
     def execute(self):
         result = 0
@@ -41,10 +41,10 @@ class CompositeSubtraction(Expression):
         return result
 
     def addOperation(self, component):
-        self._children.add(component)
+        self._children.append(component)
 
     def removeOperation(self, component):
-        self._children.discard(component) 
+        self._children.remove(component) 
         
     def __str__(self) -> str:
         print("in comp str")
