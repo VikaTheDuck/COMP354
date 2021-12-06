@@ -64,7 +64,7 @@ class Subtract(Expression):
         return self.x - self.y
 
 class IfStatement(Expression):
-    def __init__(self, x, y, operator, thenOperation) -> None:
+    def __init__(self, x, y, operator, thenOperation, elseOperation=0) -> None:
         super().__init__()
         self.x = x
         self.y = y
@@ -72,9 +72,14 @@ class IfStatement(Expression):
         self.thenOperation = thenOperation
     
     def execute(self):
-        if eval(f'{self.x} {self.operator} + {self.y}'):
+        if isinstance(self.x,Expression):
+            self.x = self.x.execute()
+        if isinstance(self.y,Expression):
+            self.y = self.y.execute()
+        if eval(f'{self.x} {self.operator} {self.y}'):
             return eval(self.thenOperation)
-        return
+        else:
+            return eval(self.elseOperation)
 
 def main():
     expr = CompositeAddition()
@@ -86,9 +91,10 @@ def main():
     # expr.addOperation(y)
     # expr.addOperation(z)
     # expr.addOperation(i)
-    x = Add(3, Add(1, Subtract(5,2)))
+    x = Add(3, Add(1, Subtract(5, IfStatement(5,4, '>', '5+4'))))
+    y = IfStatement(5,4, '>', '2+3')
     expr.addOperation(x)
-    print(x.execute())
+    print(y.execute())
 
 if __name__ == "__main__":
     main()
