@@ -59,17 +59,59 @@ class TextEditor:
         self.output.insert(INSERT, ">" + self.input + "\n")
         self.output.config(state=DISABLED)
 
+        #Enter Button test
+        try:
+            assert (self.newInput)
+            print('PASSED Enter button is responsive')
+        except AssertionError:
+            print(f"""
+                  =====================
+                TEST FAIL Enter button is not responsive
+                  =====================
+                  """)
+            raise AssertionError
+        print('Tests passed.')
+        print(u'=' * 20)
+
     def click_previous(self):
         if self.iterator > 0:
             self.iterator -= 1
             self.textEntry.delete(0, END)
             self.textEntry.insert(INSERT, self.entryList[self.iterator])
 
+        # Previous button responsiveness test
+        try:
+            assert (self.textEntry.cget != '')
+            print('PASSED Previous button is responsive')
+        except AssertionError:
+            print(f"""
+                  =====================
+                TEST FAIL Previous button is not responsive
+                  =====================
+                  """)
+            raise AssertionError
+        print('Tests passed.')
+        print(u'=' * 20)
+
     def click_next(self):
         if self.iterator < len(self.entryList) - 1:
             self.iterator += 1
             self.textEntry.delete(0, END)
             self.textEntry.insert(INSERT, self.entryList[self.iterator])
+
+        # Next button responsiveness test
+        try:
+            assert (self.textEntry.cget != '')
+            print('PASSED Next button is responsive')
+        except AssertionError:
+            print(f"""
+                  =====================
+                TEST FAIL Next button is not responsive
+                  =====================
+                  """)
+            raise AssertionError
+        print('Tests passed.')
+        print(u'=' * 20)
 
     def click_contrast(self):
         if self.highContrast:
@@ -88,6 +130,26 @@ class TextEditor:
             self.enter.configure(bg="#ffffff")
             self.previous.configure(bg="#ffffff")
             self.next.configure(bg="#ffffff")
+
+            #High Contrast Colors Tests
+            try:
+                assert (self.window.cget('bg') == "#ffffff")
+                assert (self.output.cget('bg') == "#ffffff")
+                assert (self.textEntry.cget('bg') == "#ffffff")
+                assert (self.enter.cget('bg') == "#ffffff")
+                assert (self.previous.cget('bg') == "#ffffff")
+                assert (self.next.cget('bg') == "#ffffff")
+                print('PASSED Test High Contrast Colors')
+            except AssertionError:
+                print(f"""
+                      =====================
+                    TEST FAIL High Contrast Colors
+                      =====================
+                      """)
+                raise AssertionError
+            print('Tests passed.')
+            print(u'=' * 20)
+
 
     def click_quit(self):
         self.window.destroy()
