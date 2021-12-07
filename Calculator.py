@@ -1,6 +1,6 @@
 
 import Parser as P
-
+from Expression import _Exception
 class Calculator():
     
     def __init__(self):
@@ -14,5 +14,5 @@ class Calculator():
             return expr.execute()
         
         except Exception as e:
-            return e
+            return _Exception("Syntax Error: invalid structure")
         
