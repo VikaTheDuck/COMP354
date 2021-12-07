@@ -3,14 +3,15 @@ import Parser as P
 
 class Calculator():
     
-    def __init__(self, parser):
+    def __init__(self):
         
-        self.parser = P()
+        self.parser = P.Parser()
     
     def getInput(self, str):
         
         try:
-            return float(P().parse_new(str))
+            expr = self.parser.parse_new(str)
+            return expr.execute()
         
         except Exception as e:
             return e

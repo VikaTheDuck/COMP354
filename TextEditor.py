@@ -24,7 +24,7 @@ class TextEditor:
         self.textEntry = Entry(self.window, bg="#f1f4f8", width=93)
 
         self.window.title("Algorithm Calculator")
-        self.window.geometry("646x345")
+        self.window.geometry("800x600")
         self.window.resizable(False, False)
 
         self.output.grid(row=0, column=0, columnspan=4, rowspan=5)
@@ -42,7 +42,10 @@ class TextEditor:
         self.next.grid(row=4, column=4)
 
         self.contrast = Button(self.window, text="High Contrast", width=10, command=self.click_contrast, bg="#ffffff")
-        self.contrast.grid(row=0, column=4)
+        self.contrast.grid(row=1, column=4)
+
+        self.close = Button(self.window, text="Quit", width=10, command=self.click_quit, bg="#ffffff")
+        self.close.grid(row=0, column=4)
 
     # Click enter function
     def click_enter(self):
@@ -86,6 +89,9 @@ class TextEditor:
             self.previous.configure(bg="#ffffff")
             self.next.configure(bg="#ffffff")
 
+    def click_quit(self):
+        self.window.destroy()
+
     def check_input(self):
         if self.newInput:
             self.newInput = False
@@ -102,16 +108,17 @@ class TextEditor:
 if __name__ == '__main__':
     window = TextEditor()
     window.create_window()
-    while True:
+    calc = C.Calculator()
+    while window.window.children:
         # Updates the UI
         window.window.update()
 
         # Checks for text input from the window
         input = window.check_input()
-        #TODO CALCULATOR
+        
         if input is not None:
             # Pass input to the parser (Just printing for now instead)
-            print(C().getInput(input))
+            outputstring = str(calc.getInput(input))
 
             # Pass error or output back to the window from the parser
-            #window.output_text(outputstring)
+            window.output_text(outputstring)
