@@ -14,5 +14,5 @@ class Calculator():
             return expr.execute()
         
         except Exception as e:
-            return _Exception("Syntax Error: invalid structure")
+            return _Exception("Syntax Error: invalid structure").execute()
         
